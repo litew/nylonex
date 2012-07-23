@@ -1,0 +1,5 @@
+repo: 096bdee05512ab12712f866ef7009e009547015f
+node: e6f77b75ebb17735f33610a03bebf422196c9a4b
+branch: default
+latesttag: socks5
+latesttagdistance: 2
