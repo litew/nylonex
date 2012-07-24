@@ -81,12 +81,12 @@ main(int argc, char **argv)
 	support = NET_SUPPORT_SOCKS4 | NET_SUPPORT_SOCKS5;
 	conf_path = SYSCONFDIR "/nylon.conf";
 	use_syslog = noresolve = verbose = verbose_dump = foreground = 0;
-	pidfilenam = "/var/run/nylon.pid";
+	pidfilenam = "/run/nylon.pid";
 	bind_port = mirror_addr = connect_ifip = bind_ifip = NULL;
 	allow_hosts = "127.0.0.1";
 	deny_hosts = "";
 
-#define GETOPT_STR "hvVfsn45p:i:I:P:c:m:a:d:"
+#define GETOPT_STR "hvVfsn45p:i:o:P:c:m:a:d:"
 	while ((opt = getopt(argc, argv, GETOPT_STR)) != -1)
 		if (opt == 'c')
 			conf_path = optarg;
@@ -144,7 +144,7 @@ main(int argc, char **argv)
 		case 'i':
 			bind_ifip = optarg;
 			break;
-		case 'I':
+		case 'o':
 			connect_ifip = optarg;
 			break;
 		case 'P':
@@ -162,8 +162,10 @@ main(int argc, char **argv)
 		}
 #undef GETOPT_STR
 
-	if (bind_port == NULL && mirror_addr == NULL)
+	if (bind_port == NULL && mirror_addr == NULL) {
 		bind_port = "1080";
+		warnv(1, "Using bind port by default: %d", bind_port);
+	}
 
 	if (!foreground) {
 		/*
@@ -297,7 +299,7 @@ usage(void)
 	    "\t-m <addr>  Mirror address/port pair <addr> in the format \"address:port\"\n"
 	    "\t-p <port>  Bind to <port> instead of the default 1080\n"
 	    "\t-i <if/ip> Bind to interface or IP address <if/ip>\n"
-	    "\t-I <if/ip> Make outgoing connections on interface or IP address <if/ip>\n"
+	    "\t-o <if/ip> Make outgoing connections on interface or IP address <if/ip>\n"
 	    "\t-P <file>  Use PID file <file>\n"
 	    "\t-c <file>  Use configuration file <file>\n",
 	    __progname, __progname, __progname);

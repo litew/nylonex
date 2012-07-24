@@ -1,7 +1,0 @@
-config.status
-Makefile
-config.log
-include/Makefile
-include/config.h
-man/Makefile
-src/Makefile
