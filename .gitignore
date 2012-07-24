@@ -1,0 +1,12 @@
+config.status
+Makefile
+config.log
+include/Makefile
+include/config.h
+include/stamp-h1
+man/Makefile
+src/Makefile
+*.o
+*.lib
+*.so
+*.out
